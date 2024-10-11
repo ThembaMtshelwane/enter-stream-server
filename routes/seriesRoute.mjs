@@ -1,4 +1,5 @@
-const express = require("express");
+import express from "express";
+import { Series } from "../models/seriesModel.mjs";
 
 const router = express.Router();
 
@@ -6,7 +7,8 @@ router.get("/", async (rqq, res) => {
   try {
     //fetch series from thee db
 
-    const media = []; // resulting from the db
+    const media = Series.getAllSeries(); // resulting from the db
+    console.log(media);
 
     if (!media.length) {
       return res.status(404).json({
@@ -96,4 +98,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const cors = require("cors");
-const movieRouter = require("./routes/movieRoute");
-const seriesRouter = require("./routes/seriesRoute");
+import cors from "cors";
+import seriesRouter from "./routes/seriesRoute.mjs";
+import movieRouter from "./routes/movieRoute.mjs";
 
 const PORT = 9000;
 const corsOptions = {
@@ -39,7 +39,7 @@ app.get("/api/movies", async (req, res) => {
 
 app.post("/api/add", async (req, res) => {
   try {
-    if (!req.body) throw new Error("Media information required");
+    if (!req.body) throw new Error("Media informatiofrom  ");
 
     const isAdded = 1; // result of adding the new media in the db
     if (!isAdded) {
