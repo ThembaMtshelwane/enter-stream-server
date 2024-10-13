@@ -2,8 +2,8 @@ import express from "express";
 const app = express();
 import cors from "cors";
 
-import seriesRouter from "./routes/seriesRoute.mjs";
-import movieRouter from "./routes/movieRoute.mjs";
+import seriesRouter from "../routes/seriesRoute.js";
+import movieRouter from "../routes/movieRoute.js";
 
 const PORT = 9000;
 const corsOptions = {

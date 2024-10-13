@@ -9,7 +9,7 @@ import {
   runTransaction,
   deleteDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebase.mjs";
+import { db } from "../config/firebase.js";
 
 const collectionName = "series";
 

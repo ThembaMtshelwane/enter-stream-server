@@ -1,5 +1,5 @@
 import express from "express";
-import { Series } from "../models/seriesModel.mjs";
+import { Series } from "../models/seriesModel.js";
 
 const router = express.Router();
 
