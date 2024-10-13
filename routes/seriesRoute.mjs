@@ -7,7 +7,7 @@ router.get("/", async (rqq, res) => {
   try {
     //fetch series from thee db
 
-    const media = Series.getAllSeries(); // resulting from the db
+    const media = await Series.getAllSeries(); // resulting from the db
     console.log(media);
 
     if (!media.length) {
@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     if (!id) throw new Error("Series ID is required");
 
-    const media = null;
+    const media = await Series.getSeriesById(id);
     if (!media) {
       return res.status(404).json({
         media,

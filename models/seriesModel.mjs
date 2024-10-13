@@ -4,11 +4,13 @@ import {
   doc,
   query,
   where,
+  getDoc,
   runTransaction,
 } from "firebase/firestore";
 import { db } from "../config/firebase.mjs";
 
 const collectionName = "series";
+
 export const Series = {
   // get all series from db
   getAllSeries: async () => {
@@ -20,6 +22,21 @@ export const Series = {
   },
 
   // get a series using its id
+  getSeriesById: async (id) => {
+    try {
+      const docRef = doc(db, collectionName, id);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        throw new Error("This series does not exist");
+      }
+      console.log("Document data:", docSnap.data());
+      return docSnap.data();
+    } catch (error) {
+      console.error("Error finding document:", error);
+      throw error;
+    }
+  },
 
   // add a series
   addSeries: async (data) => {
@@ -48,6 +65,7 @@ export const Series = {
           year,
           type,
           genre,
+          id: newDocRef.id,
         });
       });
 
