@@ -42,4 +42,4 @@ app.get("/api/movies", async (req, res) => {
 //   console.log(`Server running at http://localhost:${PORT}`);
 // });
 
-module.exports = app;
+export default app;
