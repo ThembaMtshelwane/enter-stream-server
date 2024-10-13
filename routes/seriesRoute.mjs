@@ -50,6 +50,25 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    if (!req.body) throw new Error("Series informatiofrom needed");
+    const isAdded = await Series.addSeries(req.body); // result of adding the new media in the db
+    if (!isAdded) {
+      return res.status(404).json({
+        message: "No series added",
+      });
+    }
+    res.status(200).json({
+      message: `${req.body.name} added succesfully`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal Server Error",
+    });
+  }
+});
+
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;

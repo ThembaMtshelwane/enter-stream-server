@@ -1,12 +1,13 @@
 import express from "express";
 const app = express();
 import cors from "cors";
+
 import seriesRouter from "./routes/seriesRoute.mjs";
 import movieRouter from "./routes/movieRoute.mjs";
 
 const PORT = 9000;
 const corsOptions = {
-  origin: "http://localhost:3000/",
+  origin: "http://localhost:3000",
 };
 
 app.use(express.json());
@@ -33,26 +34,6 @@ app.get("/api/movies", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: error.message || "Internal server error",
-    });
-  }
-});
-
-app.post("/api/add", async (req, res) => {
-  try {
-    if (!req.body) throw new Error("Media informatiofrom  ");
-
-    const isAdded = 1; // result of adding the new media in the db
-    if (!isAdded) {
-      return res.status(404).json({
-        message: "Media no added",
-      });
-    }
-    res.status(200).json({
-      message: `${req.body.name} added succesfully`,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message || "Internal Server Error",
     });
   }
 });
