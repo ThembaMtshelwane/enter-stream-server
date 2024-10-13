@@ -1,6 +1,7 @@
 import {
   collection,
   getDocs,
+  setDoc,
   doc,
   query,
   where,
@@ -35,6 +36,24 @@ export const Series = {
     } catch (error) {
       console.error("Error finding document:", error);
       throw error;
+    }
+  },
+
+  // update a series
+  updateSeriesById: async (data) => {
+    try {
+      const docRef = doc(db, collectionName, data.id);
+      const docSnapshot = await getDoc(docRef);
+
+      if (docSnapshot.exists()) {
+        await setDoc(docRef, data);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(`Error updating series with ID ${data.id}:`, error);
+      return false;
     }
   },
 
@@ -77,6 +96,5 @@ export const Series = {
     }
   },
 
-  // update a series
   // delete a series from the db
 };
