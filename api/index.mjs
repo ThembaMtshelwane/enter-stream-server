@@ -10,6 +10,14 @@ const corsOptions = {
   origin: "http://localhost:3000",
 };
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'none'; script-src 'self' https://vercel.live; style-src 'self' https://vercel.live; img-src 'self' data:; connect-src 'self' https://your-api-endpoint.com;"
+  );
+  next();
+});
+
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use("/api/movie", movieRouter);
