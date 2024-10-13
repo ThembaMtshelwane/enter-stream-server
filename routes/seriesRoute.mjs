@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     if (!id) throw new Error("Series id is required");
 
-    const isDeleted = 0; // result of delete
+    const isDeleted = await Series.delete(id);
 
     if (!isDeleted) {
       return res.status(404).json({
