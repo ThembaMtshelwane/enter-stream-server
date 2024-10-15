@@ -6,7 +6,7 @@ import mediaRouter from "../routes/mediaRoute.js";
 
 const PORT = 9000;
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["https://enter-stream.vercel.app/", "http://localhost:3000"],
 };
 
 app.use((req, res, next) => {

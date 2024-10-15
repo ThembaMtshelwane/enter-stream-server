@@ -9,6 +9,7 @@ import {
   runTransaction,
   deleteDoc,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../api/firebase.js";
 
 const collectionName = "data";
@@ -74,12 +75,17 @@ export const MediaData = {
         throw new Error("MediaData already exists");
       }
 
+      const storageRef = ref(storage, imageURL);
+      const snapshot = await uploadBytes(storageRef, file);
+
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
       // Using Firestore transactions
       const newDocRef = doc(collection(db, collectionName));
       await runTransaction(db, async (transaction) => {
         transaction.set(newDocRef, {
           name,
-          imageURL,
+          imageURL: downloadURL,
           description,
           country,
           year,
