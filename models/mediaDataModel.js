@@ -11,11 +11,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../api/firebase.js";
 
-const collectionName = "series";
+const collectionName = "data";
 
-export const Series = {
-  // get all series from db
-  getAllSeries: async () => {
+export const MediaData = {
+  // get all media data from db
+  getAllMediaData: async () => {
     const querySnapshot = await getDocs(collection(db, collectionName));
     return querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -23,14 +23,14 @@ export const Series = {
     }));
   },
 
-  // get a series using its id
-  getSeriesById: async (id) => {
+  // get a media data using its id
+  getMediaDataById: async (id) => {
     try {
       const docRef = doc(db, collectionName, id);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        throw new Error("This series does not exist");
+        throw new Error("This media data does not exist");
       }
       console.log("Document data:", docSnap.data());
       return docSnap.data();
@@ -40,8 +40,8 @@ export const Series = {
     }
   },
 
-  // update a series
-  updateSeriesById: async (data) => {
+  // update a mediaData
+  updateMediaDataById: async (data) => {
     try {
       const docRef = doc(db, collectionName, data.id);
       const docSnapshot = await getDoc(docRef);
@@ -53,25 +53,25 @@ export const Series = {
         return false;
       }
     } catch (error) {
-      console.error(`Error updating series with ID ${data.id}:`, error);
+      console.error(`Error updating media data with ID ${data.id}:`, error);
       return false;
     }
   },
 
-  // add a series
-  addSeries: async (data) => {
+  // add a media data
+  addMediaData: async (data) => {
     try {
       const { name, imageURL, description, country, year, type, genre } = data;
 
-      // Check if a series with the same name already exists
-      const seriesQuery = query(
+      // Check if a media data with the same name already exists
+      const mediaDataQuery = query(
         collection(db, collectionName),
         where("name", "==", name)
       );
-      const querySnapshot = await getDocs(seriesQuery);
+      const querySnapshot = await getDocs(mediaDataQuery);
       if (!querySnapshot.empty) {
-        console.log("Series with this name already exists.");
-        throw new Error("Series already exists");
+        console.log("MediaData with this name already exists.");
+        throw new Error("MediaData already exists");
       }
 
       // Using Firestore transactions
@@ -97,14 +97,14 @@ export const Series = {
     }
   },
 
-  // delete a series from the db
+  // delete a media data from the db
   delete: async (id) => {
     try {
       const docRef = doc(db, collectionName, id);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        throw new Error("This series does not exist");
+        throw new Error("This media data does not exist");
       }
       await deleteDoc(doc(db, collectionName, id));
       return true;

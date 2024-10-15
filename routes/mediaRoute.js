@@ -1,24 +1,24 @@
 import express from "express";
-import { Series } from "../models/seriesModel.js";
+import { MediaData } from "../models/mediaDataModel.js";
 
 const router = express.Router();
 
 router.get("/", async (rqq, res) => {
   try {
-    //fetch series from thee db
+    //fetch mediaData from thee db
 
-    const media = await Series.getAllSeries(); // resulting from the db
+    const media = await MediaData.getAllMediaData(); // resulting from the db
     console.log(media);
 
     if (!media.length) {
       return res.status(404).json({
         media,
-        message: "Series not found 😞",
+        message: "Media Data not found 😞",
       });
     }
     res.status(200).json({
       media,
-      message: "Series fetched succesfully 😎",
+      message: "Media Data fetched succesfully 😎",
     });
   } catch (error) {
     res.status(500).json({
@@ -30,18 +30,18 @@ router.get("/", async (rqq, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) throw new Error("Series ID is required");
+    if (!id) throw new Error("Media Data ID is required");
 
-    const media = await Series.getSeriesById(id);
+    const media = await MediaData.getMediaDataById(id);
     if (!media) {
       return res.status(404).json({
         media,
-        message: `Series with id ${id} not found`,
+        message: `Media Data with id ${id} not found`,
       });
     }
     res.status(200).json({
       media: media,
-      message: `Series with id ${id}  found`,
+      message: `Media Data with id ${id}  found`,
     });
   } catch (error) {
     res.status(500).json({
@@ -52,11 +52,11 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    if (!req.body) throw new Error("Series informatiofrom needed");
-    const isAdded = await Series.addSeries(req.body);
+    if (!req.body) throw new Error("Media Data informatiofrom needed");
+    const isAdded = await MediaData.addMediaData(req.body);
     if (!isAdded) {
       return res.status(404).json({
-        message: "No series added",
+        message: "No media Data added",
       });
     }
     res.status(200).json({
@@ -72,16 +72,16 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const newPayload = req.body;
-    if (!newPayload) throw new Error("New series data is required");
+    if (!newPayload) throw new Error("New media Data data is required");
 
-    const isEdited = await Series.updateSeriesById(newPayload);
+    const isEdited = await MediaData.updateMediaDataById(newPayload);
     if (!isEdited) {
       return res.status(404).json({
-        message: `Series ${newPayload.id} not edited`,
+        message: `Media Data ${newPayload.id} not edited`,
       });
     }
     res.status(200).json({
-      message: `Series ${newPayload.id} succesfully edited`,
+      message: `Media Data ${newPayload.id} succesfully edited`,
     });
   } catch (error) {
     res.status(500).json({
@@ -93,17 +93,17 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) throw new Error("Series id is required");
+    if (!id) throw new Error("Media Data id is required");
 
-    const isDeleted = await Series.delete(id);
+    const isDeleted = await MediaData.delete(id);
 
     if (!isDeleted) {
       return res.status(404).json({
-        message: `Series ${id} not deleted`,
+        message: `Media Data ${id} not deleted`,
       });
     }
     res.status(200).json({
-      message: `Series ${id} succesfully deleted`,
+      message: `Media Data ${id} succesfully deleted`,
     });
   } catch (error) {
     res.status(500).json({
