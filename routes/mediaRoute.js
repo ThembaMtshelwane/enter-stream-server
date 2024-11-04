@@ -8,7 +8,6 @@ router.get("/", async (rqq, res) => {
     //fetch mediaData from thee db
 
     const media = await MediaData.getAllMediaData(); // resulting from the db
-    console.log(media);
 
     if (!media.length) {
       return res.status(404).json({
@@ -18,7 +17,7 @@ router.get("/", async (rqq, res) => {
     }
     res.status(200).json({
       media,
-      message: "Media Data fetched succesfully 😎",
+      message: "Media Data fetched successfully 😎",
     });
   } catch (error) {
     res.status(500).json({
@@ -52,7 +51,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    if (!req.body) throw new Error("Media Data informatiofrom needed");
+    if (!req.body) throw new Error("Media Data  needed");
     const isAdded = await MediaData.addMediaData(req.body);
     if (!isAdded) {
       return res.status(404).json({
@@ -60,7 +59,7 @@ router.post("/", async (req, res) => {
       });
     }
     res.status(200).json({
-      message: `${req.body.name} added succesfully`,
+      message: `${req.body.name} added successfully`,
     });
   } catch (error) {
     res.status(500).json({
@@ -81,7 +80,7 @@ router.put("/:id", async (req, res) => {
       });
     }
     res.status(200).json({
-      message: `Media Data ${newPayload.id} succesfully edited`,
+      message: `Media Data ${newPayload.id} successfully edited`,
     });
   } catch (error) {
     res.status(500).json({
@@ -103,7 +102,7 @@ router.delete("/:id", async (req, res) => {
       });
     }
     res.status(200).json({
-      message: `Media Data ${id} succesfully deleted`,
+      message: `Media Data ${id} successfully deleted`,
     });
   } catch (error) {
     res.status(500).json({
